@@ -1,0 +1,8 @@
+{
+  "name": "super",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "de016c8d"
+}
