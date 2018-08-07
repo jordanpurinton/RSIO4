@@ -1,0 +1,6 @@
+{
+  "appId": "com.routeshare.app",
+  "appName": "routeshare",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

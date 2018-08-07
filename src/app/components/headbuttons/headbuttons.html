@@ -1,0 +1,16 @@
+<distance-slider></distance-slider>
+
+<ion-buttons>
+  <div [(user)]="driver">
+    <button fullpadding-right round large ion-button icon-only (click)="presentAddPopover($addRoute)">
+      <ion-icon icon-start name="add"></ion-icon>
+      Add Route
+    </button>
+  </div>
+  <div [(user)]="rider">
+    <button full round large ion-button icon-only (click)="presentReqPopover($reqRoute)">
+      Seek Route
+      <ion-icon name="swap"></ion-icon>
+    </button>
+  </div>
+</ion-buttons>

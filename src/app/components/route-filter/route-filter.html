@@ -1,0 +1,93 @@
+<ion-grid>
+  <ion-card>
+    <ion-buttons>
+
+      <!-- <ion-row>
+          <ion-col col-5></ion-col>
+          <ion-col col-3> -->
+      <button padding-left large ion-button full (click)="hide()">
+        <header>
+          Filter
+        </header>
+      </button>
+      <!-- </ion-col>
+          <ion-col col-4></ion-col>
+        </ion-row> -->
+
+    </ion-buttons>
+
+    <ion-card-content #cc>
+      <div *ngIf="hideMe">
+        <ion-row inline>
+          <ion-col col-6>
+            <ion-item>
+              <ion-icon name="pin" item-start></ion-icon>
+              <textarea>Location</textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-4>
+            <ion-item interface="popover">
+              <ion-icon name="people" item-start></ion-icon>
+              <ion-label>Passengers</ion-label>
+              <ion-select [(ngModel)]="passengers">
+                <ion-option value="1">1</ion-option>
+                <ion-option value="2">2</ion-option>
+                <ion-option value="3">3</ion-option>
+                <ion-option value="4">4</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col col-2>
+
+          </ion-col>
+
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Start Time</ion-label>
+              <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="myDate"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col col-2>
+
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-4>
+            <ion-item>
+              <ion-icon name="cash" item-start></ion-icon>
+              <ion-label>Compensation</ion-label>
+              <ion-input type="number" [value]="$>=0">>
+              </ion-input>
+              <ion-select [(ngModel)]="currency">
+                <ion-option value="cur">$</ion-option>
+                <ion-option value="btc">₿</ion-option>
+                <ion-option value="eth">Ξ</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col col-2>
+
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label>Driver Rating</ion-label>
+              <ion-range [(ngModel)]="driverrating">
+                <ion-icon range-left small name="star-outline"></ion-icon>
+                <ion-icon range-right name="star"></ion-icon>
+              </ion-range>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <headbuttons></headbuttons>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-grid>
