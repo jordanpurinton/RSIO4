@@ -580,8 +580,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\public\RSIO4\routeshareIO4\src\theme\variables.scss */"./src/theme/variables.scss");
-module.exports = __webpack_require__(/*! C:\public\RSIO4\routeshareIO4\src\global.scss */"./src/global.scss");
+__webpack_require__(/*! C:\public\routeshareio4\src\theme\variables.scss */"./src/theme/variables.scss");
+module.exports = __webpack_require__(/*! C:\public\routeshareio4\src\global.scss */"./src/global.scss");
 
 
 /***/ })

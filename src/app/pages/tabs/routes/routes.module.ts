@@ -10,6 +10,7 @@ import { RoutesPage } from './routes.page';
 const routes: Routes = [
   {
     path: '',
+    outlet: 'tab1',
     component: RoutesPage
   }
 ];
@@ -23,4 +24,4 @@ const routes: Routes = [
   ],
   declarations: [RoutesPage]
 })
-export class RoutesPageModule {}
+export class RoutesPageModule { }

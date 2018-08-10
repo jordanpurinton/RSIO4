@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'route-card',
+  selector: 'app-route-card',
   templateUrl: 'route-card.html'
 })
 export class RouteCardComponent {

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'route',
+  selector: 'app-route',
   templateUrl: 'route.html'
 })
 export class RouteComponent {

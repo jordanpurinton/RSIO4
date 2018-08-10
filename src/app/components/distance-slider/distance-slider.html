@@ -1,7 +1,7 @@
 <ion-item>
   <ion-label>Distance from Current Location</ion-label>
   <ion-range min="1" max="50" step="5" snaps="true" [(ngModel)]="distance">
-    <ion-icon range-left name="pin"></ion-icon>
-    <ion-icon range-right name="map"></ion-icon>
+    <ion-icon slot="start" name="pin"></ion-icon>
+    <ion-icon slot="end" name="map"></ion-icon>
   </ion-range>
 </ion-item>

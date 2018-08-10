@@ -1,29 +1,28 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController } from 'ionic-angular';
+import { ModalController, NavController } from '@ionic/angular';
 
-import { AddRoutePopover } from "../add-route/add-route";
-import { ReqRoutePopover } from "../request-route/request-route";
-import { User } from '../../../node_modules/firebase';
+import { AddRouteModal } from '../add-route/add-route';
+import { ReqRouteModal } from '../request-route/request-route';
+// import { User } from '../../../../node_modules/firebase';
 
 @Component({
-  selector: 'headbuttons',
+  selector: 'app-headbuttons',
   templateUrl: 'headbuttons.html'
 })
 export class HeadbuttonsComponent {
-  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController) { }
-  public user: User;
-  presentAddPopover(addRouteStart, addRouteEnd) {
-    let popover = this.popoverCtrl.create(AddRoutePopover);
-    popover.present({
-      ev: AddRoutePopover
-
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController) { }
+  // public user: User;
+  async presentAddModal(addRoute) {
+    const modal = await this.modalCtrl.create({
+      component: AddRouteModal,
+      componentProps: { addRoute }
     });
   }
 
-  presentReqPopover(reqRoute) {
-    let popover = this.popoverCtrl.create(ReqRoutePopover);
-    popover.present({
-      ev: ReqRoutePopover
+  async presentReqModal(reqRoute) {
+    const modal = await this.modalCtrl.create({
+      component: ReqRouteModal,
+      componentProps: { reqRoute }
     });
   }
 }

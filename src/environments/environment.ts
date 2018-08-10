@@ -2,8 +2,18 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+import { FirebaseAppConfig } from 'angularfire2';
+
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyCuOnVOU7Fp5gIAOU1OkSSWexChnEvemSI',
+    authDomain: 'routeshareio4.firebaseapp.com',
+    databaseURL: 'https://routeshareio4.firebaseio.com',
+    projectId: 'routeshareio4',
+    storageBucket: 'routeshareio4.appspot.com',
+    messagingSenderId: '335568464434'
+  } as FirebaseAppConfig
 };
 
 /*

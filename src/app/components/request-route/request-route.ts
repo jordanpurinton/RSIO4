@@ -1,54 +1,57 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
-
-import { RouteListComponent } from '../route-list/route-list';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { RouteComponent } from '../route/route';
+import { RouteListComponent } from '../route-list/route-list';
 
 declare var google;
 @Component({
-  selector: 'page-request-route',
+  selector: 'app-request-route',
   templateUrl: 'request-route.html',
   template: `
     <ion-list>
-      <ion-list-header>Ionic</ion-list-header>
-      <button ion-item (click)="close()">Learn Ionic</button>
-      <button ion-item (click)="close()">Documentation</button>
-      <button ion-item (click)="close()">Showcase</button>
-      <button ion-item (click)="close()">GitHub Repo</button>
+      <ion-list-header><ion-label>Ionic</ion-label></ion-list-header>
+      <ion-item (click)="close()"><ion-label>Learn Ionic</ion-label></ion-item>
+      <ion-item (click)="close()"><ion-label>Documentation</ion-label></ion-item>
+      <ion-item (click)="close()"><ion-label>Showcase</ion-label></ion-item>
+      <ion-item (click)="close()"><ion-label>GitHub Repo</ion-label></ion-item>
     </ion-list>
   `
 })
-export class ReqRoutePopover {
-  constructor(public viewCtrl: ViewController) { }
+export class ReqRouteModal {
+  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
   public map: any;
   public route: RouteComponent;
   public routeList: RouteListComponent[] = [];
-  public reqRoute: (reqRouteStart, reqRouteEnd) => reqRoute;
 
 
   public reqRouteStart(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let reqRouteStart = new google.maps.Marker({
+    const reqRouteStart = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
   }
 
   public reqRouteEnd(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let routeEnd = new google.maps.Marker({
+    const routeEnd = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
+  }
+
+  public reqRoute(reqRouteStart, reqRouteEnd) {
+    const routeStart = reqRouteStart.google.maps.Animation.DROP;
+    const routeEnd = reqRouteEnd.google.maps.Animation.DROP;
   }
 
   close() {
-    this.viewCtrl.dismiss();
+    this.modalCtrl.dismiss();
   }
 }

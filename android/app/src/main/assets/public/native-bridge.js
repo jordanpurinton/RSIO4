@@ -1,6 +1,6 @@
 //# sourceURL=capacitor-runtime.js
 
-(function(win) {
+(function (win) {
   win.Capacitor = win.Capacitor || {
     Plugins: {}
   };
@@ -14,7 +14,7 @@
   addLegacyHandlers(win);
 
   capacitor.Plugins = capacitor.Plugins || {};
-  
+
   capacitor.DEBUG = typeof capacitor.DEBUG === 'undefined' ? true : capacitor.DEBUG;
 
   // keep a collection of callbacks for native response data
@@ -50,7 +50,7 @@
   }
 
   var useFallbackLogging = Object.keys(win.console).length === 0;
-  if(useFallbackLogging) {
+  if (useFallbackLogging) {
     win.console.warn('Advance console logging disabled.')
   }
 
@@ -79,7 +79,7 @@
               }
               // convert to string
               return arg + '';
-          });
+            });
             capacitor.toNative('Console', 'log', {
               level,
               message: msgs.join(' ')
@@ -96,22 +96,22 @@
 
   function addLegacyHandlers(win) {
     win.navigator.app = {
-      exitApp: function() {
+      exitApp: function () {
         capacitor.toNative("App", "exitApp", {}, null);
       }
     }
     let documentAddEventListener = document.addEventListener;
-    document.addEventListener = function() {
+    document.addEventListener = function () {
       var name = arguments[0];
       var handler = arguments[1];
       if (name === 'deviceready') {
-        setTimeout(function() {
+        setTimeout(function () {
           handler && handler();
         });
       } else if (name === 'backbutton') {
         // Add a dummy listener so Capacitor doesn't do the default
         // back button action
-        Capacitor.Plugins.App && Capacitor.Plugins.App.addListener('backButton', function() {});
+        Capacitor.Plugins.App && Capacitor.Plugins.App.addListener('backButton', function () {});
       }
       return documentAddEventListener.apply(document, arguments);
     }
@@ -216,7 +216,7 @@
     delete result.error;
   };
 
-  capacitor.logJs = function(message, level) {
+  capacitor.logJs = function (message, level) {
     switch (level) {
       case 'error':
         console.error(message);
@@ -232,11 +232,10 @@
     }
   }
 
-  capacitor.withPlugin = function withPlugin(_pluginId, _fn) {
-  };
+  capacitor.withPlugin = function withPlugin(_pluginId, _fn) {};
 
   capacitor.nativeCallback = function (pluginId, methodName, options, callback) {
-    if(typeof options === 'function') {
+    if (typeof options === 'function') {
       callback = options;
       options = null;
     }
@@ -255,27 +254,29 @@
   };
 
 
-  capacitor.addListener = function(pluginId, eventName, callback) {
+  capacitor.addListener = function (pluginId, eventName, callback) {
     var callbackId = capacitor.nativeCallback(pluginId, 'addListener', {
       eventName
     }, callback);
     return {
-      remove: function() {
+      remove: function () {
         console.log('Removing listener', pluginId, eventName);
         capacitor.removeListener(pluginId, callbackId, eventName, callback);
       }
     }
   };
 
-  capacitor.removeListener = function(pluginId, callbackId, eventName, callback) {
+  capacitor.removeListener = function (pluginId, callbackId, eventName, callback) {
     capacitor.nativeCallback(pluginId, 'removeListener', {
       callbackId,
       eventName
     }, callback);
   }
 
-  capacitor.triggerEvent = function(eventName, target, data) {
-    var event = new CustomEvent(eventName, { detail: data || {} });
+  capacitor.triggerEvent = function (eventName, target, data) {
+    var event = new CustomEvent(eventName, {
+      detail: data || {}
+    });
     if (target === "document") {
       document.dispatchEvent(event);
     } else if (target === "window") {
@@ -286,22 +287,22 @@
     }
   }
 
-  capacitor.handleError = function(error) {
+  capacitor.handleError = function (error) {
     console.error(error);
 
     if (!Capacitor.DEBUG) {
       return;
     }
 
-    if(!errorModal) {
+    if (!errorModal) {
       errorModal = makeErrorModal(error);
     }
-      
+
     errorModal.style.display = 'block';
     updateErrorModal(error);
   }
- 
- 
+
+
   capacitor.handleWindowError = function (msg, url, lineNo, columnNo, error) {
     var string = msg.toLowerCase();
     var substring = "script error";
@@ -322,9 +323,9 @@
       console.error(error);
 
       win.Capacitor.handleError(error);
-      if(capacitor.isAndroid) {
+      if (capacitor.isAndroid) {
         win.androidBridge.postMessage(JSON.stringify(errObj));
-      } else if(capacitor.isIOS) {
+      } else if (capacitor.isIOS) {
         win.webkit.messageHandlers.bridge.postMessage(errObj);
       }
     }
@@ -332,56 +333,59 @@
     return false;
   };
 
-  capacitor.logToNative = function(call) {
-    if(!useFallbackLogging) {
-        var c = orgConsole;
-        c.groupCollapsed(`%cnative %c${call.pluginId}.${call.methodName} (#${call.callbackId})`,
-            `font-weight: lighter; color: gray`, `font-weight: bold; color: #000`);
-        c.dir(call);
-        c.groupEnd();
-        //orgConsole.log('LOG TO NATIVE', call);
+  capacitor.logToNative = function (call) {
+    if (!useFallbackLogging) {
+      var c = orgConsole;
+      c.groupCollapsed(`%cnative %c${call.pluginId}.${call.methodName} (#${call.callbackId})`,
+        `font-weight: lighter; color: gray`, `font-weight: bold; color: #000`);
+      c.dir(call);
+      c.groupEnd();
+      //orgConsole.log('LOG TO NATIVE', call);
     } else {
-        win.console.log('LOG TO NATIVE: ', call);
-        if (capacitor.isNative) {
-            try {
-                capacitor.toNative('Console', 'log', {message: JSON.stringify(call)});
-            } catch (e) {
-                win.console.log('Error converting/posting console messages');
-            }
+      win.console.log('LOG TO NATIVE: ', call);
+      if (capacitor.isNative) {
+        try {
+          capacitor.toNative('Console', 'log', {
+            message: JSON.stringify(call)
+          });
+        } catch (e) {
+          win.console.log('Error converting/posting console messages');
         }
+      }
     }
   }
 
-  capacitor.logFromNative = function(result) {
-      if(!useFallbackLogging) {
-          var c = orgConsole;
+  capacitor.logFromNative = function (result) {
+    if (!useFallbackLogging) {
+      var c = orgConsole;
 
-          var success = result.success === true;
+      var success = result.success === true;
 
-          var tagStyles = success ? 'font-style: italic; font-weight: lighter; color: gray' :
-              'font-style: italic; font-weight: lighter; color: red';
+      var tagStyles = success ? 'font-style: italic; font-weight: lighter; color: gray' :
+        'font-style: italic; font-weight: lighter; color: red';
 
-          c.groupCollapsed('%cresult %c' + result.pluginId + '.' + result.methodName + ' (#' + result.callbackId + ')',
-              tagStyles,
-              'font-style: italic; font-weight: bold; color: #444');
-          if (result.success === false) {
-              c.error(result.error);
-          } else {
-              c.dir(result.data);
-          }
-          c.groupEnd();
+      c.groupCollapsed('%cresult %c' + result.pluginId + '.' + result.methodName + ' (#' + result.callbackId + ')',
+        tagStyles,
+        'font-style: italic; font-weight: bold; color: #444');
+      if (result.success === false) {
+        c.error(result.error);
       } else {
-          if (result.success === false) {
-              win.console.error(result.error);
-          } else {
-              win.console.log(result.data);
-          }
+        c.dir(result.data);
       }
+      c.groupEnd();
+    } else {
+      if (result.success === false) {
+        win.console.error(result.error);
+      } else {
+        win.console.log(result.data);
+      }
+    }
   }
 
-  capacitor.uuidv4 = function() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+  capacitor.uuidv4 = function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
   }
@@ -511,16 +515,16 @@
     `
     var el = document.createElement('div');
     el.innerHTML = html;
-    el.className ="_avc-modal";
+    el.className = "_avc-modal";
 
     var closeButton = el.querySelector('#_avc-modal-close');
-    closeButton.addEventListener('click', function(e) {
+    closeButton.addEventListener('click', function (e) {
       el.style.display = 'none';
     })
 
     var copyButton = el.querySelector('#_avc-copy-error');
-    copyButton.addEventListener('click', function(e) {
-      if(lastError) {
+    copyButton.addEventListener('click', function (e) {
+      if (lastError) {
         Capacitor.Plugins.Clipboard.write({
           string: lastError.message + '\n' + lastError.stack
         });
@@ -538,7 +542,9 @@
   }
 
   function updateErrorModal(error) {
-    if(!errorModal) { return; }
+    if (!errorModal) {
+      return;
+    }
 
     if (typeof error === 'string') {
       return;
@@ -547,7 +553,7 @@
     lastError = error;
 
     var message = error.message;
-    if(error.rejection) {
+    if (error.rejection) {
       message = `Promise rejected: ${error.rejection.message}` + "<br />" + message;
     }
 
@@ -575,7 +581,7 @@
       var appIndex = line.indexOf('.app');
 
       // Remove the big long iOS path
-      if(atIndex >= 0 && appIndex >= 0) {
+      if (atIndex >= 0 && appIndex >= 0) {
         //var badSubstr = line.substring(atIndex, appIndex + 5);
         line = '<b>' + line.substring(0, atIndex) + '</b>' + '@' + line.substring(appIndex + 5);
       }
@@ -583,4 +589,3 @@
     });
   }
 })(window);
-

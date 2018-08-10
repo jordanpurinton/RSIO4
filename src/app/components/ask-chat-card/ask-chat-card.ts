@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'ask-chat-card',
+  selector: 'app-ask-chat-card',
   templateUrl: 'ask-chat-card.html'
 })
 export class AskChatCardComponent {

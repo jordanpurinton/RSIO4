@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'distance-slider',
+  selector: 'app-distance-slider',
   templateUrl: 'distance-slider.html'
 })
 export class DistanceSliderComponent {

@@ -9,12 +9,12 @@ const { Geolocation, Network } = Plugins;
 
 declare var google;
 @Component({
-  selector: 'google-maps',
+  selector: 'app-google-maps',
   templateUrl: 'google-maps.html'
 })
 export class GoogleMapComponent {
 
-  @Input('apiKey') apiKey: string;
+  @Input() apiKey: string;
 
   public map: any;
   public markers: any[] = [];
@@ -27,10 +27,10 @@ export class GoogleMapComponent {
 
   }
 
-  ngOnInit() {
+  OnInit() {
 
     this.init().then((res) => {
-      console.log("Google Maps ready.")
+      console.log('Google Maps ready.');
     }, (err) => {
       console.log(err);
     });
@@ -43,7 +43,7 @@ export class GoogleMapComponent {
 
       this.loadSDK().then((res) => {
 
-        this.initMap().then((res) => {
+        this.initMap().then(() => {
           resolve(true);
         }, (err) => {
           reject(err);
@@ -61,7 +61,7 @@ export class GoogleMapComponent {
 
   private loadSDK(): Promise<any> {
 
-    console.log("Loading Google Maps SDK");
+    console.log('Loading Google Maps SDK');
 
     return new Promise((resolve, reject) => {
 
@@ -81,14 +81,14 @@ export class GoogleMapComponent {
 
             if (this.networkHandler == null) {
 
-              this.networkHandler = Network.addListener('networkStatusChange', (status) => {
+              this.networkHandler = Network.addListener('networkStatusChange', () => {
 
                 if (status.connected) {
 
                   this.networkHandler.remove();
 
                   this.init().then((res) => {
-                    console.log("Google Maps ready.")
+                    console.log('Google Maps ready.');
                   }, (err) => {
                     console.log(err);
                   });
@@ -109,7 +109,7 @@ export class GoogleMapComponent {
 
             this.injectSDK().then((res) => {
               resolve(true);
-            }, (err) => {
+            }, () => {
               reject(err);
             });
 
@@ -135,9 +135,9 @@ export class GoogleMapComponent {
       window['mapInit'] = () => {
         this.mapsLoaded = true;
         resolve(true);
-      }
+      };
 
-      let script = this.renderer.createElement('script');
+      const script = this.renderer.createElement('script');
       script.id = 'googleMaps';
 
       if (this.apiKey) {
@@ -160,9 +160,9 @@ export class GoogleMapComponent {
 
         console.log(position);
 
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        const latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        let mapOptions = {
+        const mapOptions = {
           center: latLng,
           zoom: 15
         };
@@ -182,9 +182,9 @@ export class GoogleMapComponent {
 
   public addMarker(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
@@ -196,28 +196,28 @@ export class GoogleMapComponent {
 
   public addRouteStart(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let routeStart = new google.maps.Marker({
+    const routeStart = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
 
   }
 
   public addRouteEnd(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let routeEnd = new google.maps.Marker({
+    const routeEnd = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
   }
 
-  //    let marker = new google.maps.Marker({
+  //    const marker = new google.maps.Marker({
   // map: this.map,
   // animation: google.maps.Animation.DROP,
   // position: latLng
@@ -225,24 +225,24 @@ export class GoogleMapComponent {
 
   public reqRouteStart(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let routeStart = new google.maps.Marker({
+    const routeStart = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
   }
 
   public reqRouteEnd(lat: number, lng: number): void {
 
-    let latLng = new google.maps.LatLng(lat, lng);
+    const latLng = new google.maps.LatLng(lat, lng);
 
-    let routeEnd = new google.maps.Marker({
+    const routeEnd = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng
-    })
+    });
   }
 
 }

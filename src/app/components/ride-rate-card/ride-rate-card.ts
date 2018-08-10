@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'ride-rate-card',
+  selector: 'app-ride-rate-card',
   templateUrl: 'ride-rate-card.html'
 })
 export class RideRateCardComponent {

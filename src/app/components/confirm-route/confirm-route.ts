@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'confirm-route',
+  selector: 'app-confirm-route',
   templateUrl: 'confirm-route.html'
 })
 export class ConfirmRouteComponent {

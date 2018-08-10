@@ -1,16 +1,18 @@
-<distance-slider></distance-slider>
+<!-- <distance-slider></distance-slider> -->
 
 <ion-buttons>
-  <div [(user)]="driver">
-    <button fullpadding-right round large ion-button icon-only (click)="presentAddPopover($addRoute)">
+  <div>
+    <!-- [(user)]="driver" expand="full" for button-->
+    <ion-button padding-right round size="large" icon-only (click)="presentAddPopover($addRoute)">
       <ion-icon icon-start name="add"></ion-icon>
       Add Route
-    </button>
+    </ion-button>
   </div>
-  <div [(user)]="rider">
-    <button full round large ion-button icon-only (click)="presentReqPopover($reqRoute)">
+  <div>
+    <!-- [(user)]="rider" expand="full" for button -->
+    <ion-button round size="large" icon-only (click)="presentReqPopover($reqRoute)">
       Seek Route
       <ion-icon name="swap"></ion-icon>
-    </button>
+    </ion-button>
   </div>
 </ion-buttons>

@@ -1,6 +1,6 @@
 {
-  "appId": "com.routeshare.app",
-  "appName": "routeshare",
+  "appId": "io.ionic.starter",
+  "appName": "routeshareIO4",
   "bundledWebRuntime": false,
   "webDir": "www"
 }

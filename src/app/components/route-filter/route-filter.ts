@@ -1,13 +1,14 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { HeadbuttonsComponent } from '../headbuttons/headbuttons';
 
 @Component({
-  selector: 'route-filter',
+  selector: 'app-route-filter',
   templateUrl: 'route-filter.html'
 })
 
 export class RouteFilterComponent implements OnInit {
 
-  @ViewChild("cc")
+  @ViewChild('cc')
   public cardContent: any;
   public http: any;
   public items: any;
@@ -17,7 +18,7 @@ export class RouteFilterComponent implements OnInit {
 
   }
   ngOnInit() {
-    console.log(this.cardContent.nativeElement)
+    console.log(this.cardContent.nativeElement);
   }
   hide() {
     this.hideMe = !this.hideMe;
